@@ -1,4 +1,5 @@
 const Queue = require('../queue');
+const Stack = require('../stack');
 
 class Node {
   constructor(data) {
@@ -38,6 +39,10 @@ class Graph {
     });
   }
 
+  initVisitedData() {
+    this.#vertices.forEach(node => node.visited = false);
+  }
+
   BFSByQueue(v, callback) {
     const queue = new Queue();
     const startNode = this.#vertices.get(v);
@@ -60,6 +65,50 @@ class Graph {
       }
     }
   }
+
+  DFSByStack(v, callback) {
+    const stack = new Stack();
+    const startNode = this.#vertices.get(v);
+    startNode.visited = true;
+    stack.push(startNode);
+
+    while (!stack.isEmpty) {
+      const currentNode = stack.pop();
+      const adjacentList = currentNode.getAdjacent();
+      adjacentList.forEach((a) => {
+        const adjacentNode = this.#vertices.get(a);
+        if (!adjacentNode.visited) {
+          adjacentNode.visited = true;
+          stack.push(adjacentNode);
+        }
+      });
+
+      if (callback && typeof callback === 'function') {
+        callback(currentNode);
+      }
+    }
+  }
+
+  getVertex(v) {
+    return this.#vertices.get(v);
+  }
+
+  DFSByRecursion(node, callback) {
+    if (!node) return null;
+
+    node.visited = true;
+    if (callback && typeof callback === 'function') {
+      callback(node);
+    }
+
+    const adjacentList = node.getAdjacent();
+    adjacentList.forEach((a) => {
+      const adjacentNode = this.#vertices.get(a);
+      if (!adjacentNode.visited) {
+        this.DFSByRecursion(adjacentNode, callback);
+      }
+    });
+  }
 }
 
 // Examples
@@ -77,12 +126,20 @@ graph.addVertex('I');
 graph.addEdge('A', 'B');
 graph.addEdge('A', 'C');
 graph.addEdge('A', 'D');
-graph.addEdge('B', 'E');
-graph.addEdge('B', 'F');
 graph.addEdge('C', 'G');
 graph.addEdge('D', 'G');
 graph.addEdge('D', 'H');
+graph.addEdge('B', 'E');
+graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
 graph.printGraphInfo();
 graph.BFSByQueue('A', ({ data }) => console.log(data));
+
+console.log('-----------');
+graph.initVisitedData();
+graph.DFSByStack('A', ({ data }) => console.log(data));
+
+console.log('-----------');
+graph.initVisitedData();
+graph.DFSByRecursion(graph.getVertex('A'), ({ data }) => console.log(data));
