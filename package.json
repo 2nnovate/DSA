@@ -2,9 +2,9 @@
   "name": "bst",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "tree/BinarySearchTree.js",
   "scripts": {
-    "start": "babel-node --presets @babel/env index.js"
+    "start": "babel-node --presets @babel/env tree/BinarySearchTree.js"
   },
   "author": "",
   "license": "ISC",
