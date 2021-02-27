@@ -26,7 +26,7 @@ class HashTable {
   has(key) {
     const hashIndex = this.getHashIndex(key);
     const linkedList = this.#table[hashIndex];
-    return linkedList && !linkedList.isEmpty;
+    return linkedList && !!linkedList.getByKey(key);
   }
 
   set(key, value) {
@@ -83,7 +83,6 @@ hashTable.set('ted', 'developer');
 hashTable.print();
 
 console.log('ted: ', hashTable.get('ted'));
-hashTable.delete('ted');
 hashTable.delete('peter');
 hashTable.print();
 
