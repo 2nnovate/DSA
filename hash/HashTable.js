@@ -15,7 +15,7 @@ class HashTable {
       hash = hash * 33 + value.charCodeAt(i);
     }
 
-    return hash;
+    return hash % 1013;
   }
 
   getHashIndex(key) {
