@@ -36,6 +36,7 @@ class LinkedList {
     if (position === 0) {
       const removedItem = this.#head;
       this.#head = this.#head.next;
+      this.#length -= 1;
       return removedItem;
     }
 
@@ -104,6 +105,17 @@ class LinkedList {
 
   getHead() {
     return this.#head;
+  }
+
+  getByKey(key) {
+    let current = this.#head;
+    while(current) {
+      if (current.key === key) {
+        return current;
+      }
+      current = current.next;
+    }
+    return null;
   }
 
   print() {
