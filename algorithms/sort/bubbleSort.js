@@ -10,7 +10,7 @@ const bubbleSortRecursive = (list, lastIndex) => {
     return;
   }
 
-  for (let i = 0; i <= lastIndex; i++) {
+  for (let i = 0; i < lastIndex; i++) {
     const current = list[i];
     const next = list[i + 1];
     if (current > next) {
