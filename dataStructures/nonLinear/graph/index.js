@@ -1,5 +1,5 @@
-const Queue = require('../queue');
-const Stack = require('../stack');
+const Queue = require('../../linear/queue');
+const Stack = require('../../linear/stack');
 
 class Node {
   constructor(data) {

@@ -1,4 +1,4 @@
-const LinkedList = require('../list/linkedList');
+const LinkedList = require('../../linear/list/linkedList');
 
 const TABLE_SIZE = 3;
 
