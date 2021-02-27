@@ -1,6 +1,7 @@
 class Node {
-  constructor(element) {
-    this.element = element;
+  constructor(key, value) {
+    this.key = key;
+    this.value = value;
     this.next = null;
   }
 }
@@ -9,8 +10,8 @@ class LinkedList {
   #head = null;
   #length = 0;
 
-  append(element) {
-    const node = new Node(element);
+  append(key, value) {
+    const node = new Node(key, value);
 
     if (!this.#head) {
       this.#head = node;
@@ -49,16 +50,16 @@ class LinkedList {
 
     previous.next = current.next;
     this.#length -= 1;
-    return current.element;
+    return current.key;
   }
 
-  insert(position, element) {
+  insert(position, key, value) {
     const isInvalidPosition = position < 0 && position >= this.#length;
     if (isInvalidPosition) {
       return false;
     }
 
-    const node = new Node(element);
+    const node = new Node(key, value);
     let current = this.#head;
     let previous = null;
     let index = 0;
@@ -74,11 +75,11 @@ class LinkedList {
     return true;
   }
 
-  indexOf(element) {
+  indexOf(key) {
     let current = this.#head;
     let index = 0;
     while(current) {
-      if (current.element === element) {
+      if (current.key === key) {
         return index;
       }
       current = current.next;
@@ -88,8 +89,8 @@ class LinkedList {
     return -1;
   }
 
-  remove(element) {
-    const removeTargetIndex = this.indexOf(element);
+  remove(key) {
+    const removeTargetIndex = this.indexOf(key);
     return this.removeAt(removeTargetIndex);
   }
 
@@ -109,23 +110,25 @@ class LinkedList {
     const elementList = [];
     let current = this.#head;
     while (current) {
-      elementList.push(current.element);
+      elementList.push(`{key: ${current.key}, value: ${current.value}}`);
       current = current.next;
     }
 
-    console.log(`linked list: [${elementList.join('-')}]`);
+    console.log(`linked list: [${elementList.join(' -> ')}]`);
   }
 }
 
+module.exports = LinkedList;
+
 // Example
 const linkedList = new LinkedList();
-linkedList.append('neo');
-linkedList.append('eloy');
-linkedList.append('sunny');
-linkedList.append('peter');
+linkedList.append('neo', 'CEO');
+linkedList.append('eloy', 'developer');
+linkedList.append('sunny', 'developer');
+linkedList.append('peter', 'designer');
 linkedList.print();
 
-linkedList.insert(linkedList.indexOf('sunny'), 'hanee');
+linkedList.insert(linkedList.indexOf('sunny'), 'hanee', 'designer');
 linkedList.print();
 linkedList.removeAt(3);
 linkedList.print();
